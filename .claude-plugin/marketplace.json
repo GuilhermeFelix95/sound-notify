@@ -1,0 +1,14 @@
+{
+  "name": "sound-notify-marketplace",
+  "owner": {
+    "name": "Guilherme Felix Ferreira"
+  },
+  "plugins": [
+    {
+      "name": "sound-notify",
+      "source": "./",
+      "description": "Plays a sound when Claude finishes a turn, and a different sound when it asks a question in plan mode."
+    }
+  ],
+  "description": "Sound notifications for Claude Code: a chime when a turn ends and a distinct sound when Claude asks a question in plan mode."
+}

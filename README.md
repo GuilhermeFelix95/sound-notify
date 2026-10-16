@@ -18,11 +18,21 @@ Outside plan mode, every turn ends with the "done" sound, even if Claude ends wi
 
 ## Installation
 
-From the plugin directory, or for local development:
+Works in the Claude Code CLI and the desktop app (they share the same configuration). Run these in a Claude Code session:
 
-```bash
-claude --plugin-dir /path/to/sound-notify
 ```
+/plugin marketplace add GuilhermeFelix95/sound-notify
+/plugin install sound-notify@sound-notify-marketplace
+```
+
+To install from a local clone (for development), add the folder as the marketplace instead:
+
+```
+/plugin marketplace add /path/to/sound-notify
+/plugin install sound-notify@sound-notify-marketplace
+```
+
+Start a new session after installing so the hook is loaded.
 
 ## How it works
 
