@@ -9,5 +9,5 @@ for await (const chunk of process.stdin) chunks.push(chunk);
 try {
   await handleStop(Buffer.concat(chunks).toString("utf8"));
 } catch (error) {
-  process.stderr.write(`claude-sound-notify: could not play a sound (${error.message})\n`);
+  process.stderr.write(`sound-notify: could not play a sound (${error.message})\n`);
 }

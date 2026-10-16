@@ -1,5 +1,5 @@
 {
-  "name": "claude-sound-notify",
+  "name": "sound-notify",
   "version": "1.0.0",
   "description": "Plays a sound when Claude finishes a turn, and a different sound when it asks a question in plan mode.",
   "author": {
@@ -14,6 +14,6 @@
     "stop",
     "plan-mode"
   ],
-  "homepage": "https://github.com/GuilhermeFelix95/claude-sound-notify",
-  "repository": "https://github.com/GuilhermeFelix95/claude-sound-notify"
+  "homepage": "https://github.com/GuilhermeFelix95/sound-notify",
+  "repository": "https://github.com/GuilhermeFelix95/sound-notify"
 }

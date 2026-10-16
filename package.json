@@ -1,5 +1,5 @@
 {
-  "name": "claude-sound-notify",
+  "name": "sound-notify",
   "version": "1.0.0",
   "description": "Sound notifications for Claude Code: a sound when a turn ends, and another when Claude asks a question in plan mode.",
   "type": "module",

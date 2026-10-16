@@ -2,7 +2,7 @@
 
 ## Visão geral
 
-Plugin do Claude Code (`claude-sound-notify`) que toca um som ao fim de cada turno e um som diferente quando o Claude faz uma pergunta em modo plan.
+Plugin do Claude Code (`sound-notify`) que toca um som ao fim de cada turno e um som diferente quando o Claude faz uma pergunta em modo plan.
 
 - **Runtime:** Node.js >= 20, sem dependências de terceiros.
 - **Testes:** `node --test` (runner nativo).

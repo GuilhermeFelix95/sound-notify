@@ -1,4 +1,4 @@
-# claude-sound-notify
+# sound-notify
 
 Sound notifications for [Claude Code](https://claude.com/claude-code).
 
@@ -21,7 +21,7 @@ Outside plan mode, every turn ends with the "done" sound, even if Claude ends wi
 From the plugin directory, or for local development:
 
 ```bash
-claude --plugin-dir /path/to/claude-sound-notify
+claude --plugin-dir /path/to/sound-notify
 ```
 
 ## How it works
@@ -42,7 +42,7 @@ npm run sounds     # regenerate sounds/*.wav
 
 ## Troubleshooting
 
-- **No sound:** check that Node.js is on your `PATH`, and that your system has an audio player (see Requirements). Errors are printed to stderr as `claude-sound-notify: ...`.
+- **No sound:** check that Node.js is on your `PATH`, and that your system has an audio player (see Requirements). Errors are printed to stderr as `sound-notify: ...`.
 - The plugin never blocks Claude: it always exits with status 0.
 
 ## License
