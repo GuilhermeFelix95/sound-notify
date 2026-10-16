@@ -1,0 +1,16 @@
+{
+  "description": "Plays a sound when Claude finishes a turn, or a distinct sound when it asks a question in plan mode",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/notify.mjs\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "claude-sound-notify",
+  "version": "1.0.0",
+  "description": "Sound notifications for Claude Code: a sound when a turn ends, and another when Claude asks a question in plan mode.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test",
+    "sounds": "node scripts/generate-sounds.mjs"
+  }
+}
