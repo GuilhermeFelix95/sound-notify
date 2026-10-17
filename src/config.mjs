@@ -7,11 +7,11 @@ export const MODES = ["always", "code-changes"];
 export const DEFAULT_CONFIG_PATH = path.join(os.homedir(), ".claude", "sound-notify.json");
 
 /**
- * Reads the user's settings. Missing or invalid files fall back to the defaults,
+ * Reads the user's settings. Missing or invalid files fall back to the default mode,
  * so a bad config never stops the sounds from working.
  *
  *   always        plays after every response
- *   code-changes  plays only after a turn that edited files (plan mode always plays)
+ *   code-changes  plays only after a turn that edited files (default; plan mode always plays)
  */
 export function loadConfig(configPath = DEFAULT_CONFIG_PATH) {
   try {
@@ -20,5 +20,5 @@ export function loadConfig(configPath = DEFAULT_CONFIG_PATH) {
   } catch {
     // Missing or invalid file: use the default below.
   }
-  return { mode: "always" };
+  return { mode: "code-changes" };
 }

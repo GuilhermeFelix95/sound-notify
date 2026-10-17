@@ -26,7 +26,7 @@ Plugin do Claude Code (`sound-notify`) que toca um som ao fim de cada turno e um
 
 1. `permission_mode` = `plan` → sempre toca: `question` se a última mensagem usa `AskUserQuestion` ou termina com `?`, senão `done`.
 2. Fora do plan, modo `always` → `done` em toda resposta.
-3. Fora do plan, modo `code-changes` → `done` só se o turno atual usou `Edit`, `Write`, `MultiEdit` ou `NotebookEdit`; senão silêncio (`null`).
+3. Fora do plan, modo `code-changes` (padrão quando não há config) → `done` só se o turno atual usou `Edit`, `Write`, `MultiEdit` ou `NotebookEdit`; senão silêncio (`null`).
 4. Qualquer falha de áudio ou de leitura é silenciosa para o Claude (log de uma linha no stderr, exit 0).
 
 ## Contrato do hook (verificado com Claude Code 2.1.x)

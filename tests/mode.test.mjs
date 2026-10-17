@@ -46,9 +46,9 @@ test("plan mode still plays question in code-changes mode", () => {
   );
 });
 
-test("loadConfig defaults to always when the file is missing", () => {
+test("loadConfig defaults to code-changes when the file is missing", () => {
   const dir = mkdtempSync(path.join(os.tmpdir(), "sn-"));
-  assert.deepEqual(loadConfig(path.join(dir, "nope.json")), { mode: "always" });
+  assert.deepEqual(loadConfig(path.join(dir, "nope.json")), { mode: "code-changes" });
 });
 
 test("loadConfig reads a valid mode", () => {
@@ -58,12 +58,12 @@ test("loadConfig reads a valid mode", () => {
   assert.deepEqual(loadConfig(file), { mode: "code-changes" });
 });
 
-test("loadConfig falls back to always on invalid JSON or unknown mode", () => {
+test("loadConfig falls back to code-changes on invalid JSON or unknown mode", () => {
   const dir = mkdtempSync(path.join(os.tmpdir(), "sn-"));
   const bad = path.join(dir, "bad.json");
   writeFileSync(bad, "{nope");
-  assert.deepEqual(loadConfig(bad), { mode: "always" });
+  assert.deepEqual(loadConfig(bad), { mode: "code-changes" });
   const unknown = path.join(dir, "unknown.json");
   writeFileSync(unknown, JSON.stringify({ mode: "loud" }));
-  assert.deepEqual(loadConfig(unknown), { mode: "always" });
+  assert.deepEqual(loadConfig(unknown), { mode: "code-changes" });
 });

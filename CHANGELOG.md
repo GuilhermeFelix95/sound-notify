@@ -7,10 +7,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Added
 - Two playback modes, set in `~/.claude/sound-notify.json`:
-  - `"always"` (default): sound after every response.
-  - `"code-changes"`: sound only after a turn that edited files (`Edit`, `Write`, `MultiEdit`, `NotebookEdit`).
+  - `"always"`: sound after every response.
+  - `"code-changes"` (default): sound only after a turn that edited files (`Edit`, `Write`, `MultiEdit`, `NotebookEdit`).
 - Plan mode always plays, in both modes.
-- Invalid or missing config falls back to `"always"`.
+- Invalid or missing config falls back to `"code-changes"`.
 
 ## [1.0.0] - 2026-10-16
 
