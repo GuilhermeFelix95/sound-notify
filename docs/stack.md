@@ -16,6 +16,7 @@ Plugin do Claude Code (`sound-notify`) que toca um som ao fim de cada turno e um
 | `hooks/hooks.json` | Registra o hook `Stop` |
 | `hooks/notify.mjs` | Ponto de entrada do hook (lê stdin, sempre sai com 0) |
 | `src/handle-stop.mjs` | Orquestra: lê a entrada do hook, escolhe o som e toca |
+| `src/config.mjs` | Lê `~/.claude/sound-notify.json` (modos `always` e `code-changes`) |
 | `src/detect.mjs` | Decide `done` ou `question` a partir de `permission_mode`, `last_assistant_message` e do transcript |
 | `src/player.mjs` | Escolhe o comando de áudio por plataforma e inicia sem bloquear |
 | `scripts/generate-sounds.mjs` | Gera `sounds/done.wav` e `sounds/question.wav` |
@@ -23,9 +24,10 @@ Plugin do Claude Code (`sound-notify`) que toca um som ao fim de cada turno e um
 
 ## Regras de decisão
 
-1. `permission_mode` diferente de `plan` → `done`.
-2. Em `plan`, `question` quando a última mensagem usa a ferramenta `AskUserQuestion` **ou** termina com `?`.
-3. Qualquer falha de áudio ou de leitura é silenciosa para o Claude (log de uma linha no stderr, exit 0).
+1. `permission_mode` = `plan` → sempre toca: `question` se a última mensagem usa `AskUserQuestion` ou termina com `?`, senão `done`.
+2. Fora do plan, modo `always` → `done` em toda resposta.
+3. Fora do plan, modo `code-changes` → `done` só se o turno atual usou `Edit`, `Write`, `MultiEdit` ou `NotebookEdit`; senão silêncio (`null`).
+4. Qualquer falha de áudio ou de leitura é silenciosa para o Claude (log de uma linha no stderr, exit 0).
 
 ## Contrato do hook (verificado com Claude Code 2.1.x)
 

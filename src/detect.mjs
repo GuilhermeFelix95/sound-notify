@@ -4,22 +4,28 @@ import { open } from "node:fs/promises";
 // reading the whole transcript on every turn.
 const TAIL_BYTES = 512 * 1024;
 
+const EDIT_TOOLS = new Set(["Edit", "Write", "MultiEdit", "NotebookEdit"]);
+
 /**
- * Chooses the sound for the end of a turn.
+ * Chooses the sound for the end of a turn. Returns "done", "question", or null
+ * when the configured mode keeps this turn silent.
  *
- * "question" is only used in plan mode, when the assistant's last message
- * asks the user something. Everything else plays "done".
+ * - Plan mode always plays: "question" when the assistant asks something, otherwise "done".
+ * - mode "always" plays "done" after every turn.
+ * - mode "code-changes" plays "done" only when this turn edited files.
  *
  * `lastMessage` is the Stop hook's `last_assistant_message`. It is used for the
  * text check when present, because the transcript may not be flushed yet.
  */
-export function decideSound({ permissionMode, transcriptText, lastMessage }) {
-  if (permissionMode !== "plan") return "done";
+export function decideSound({ permissionMode, transcriptText, lastMessage, mode = "always" }) {
+  if (permissionMode === "plan") {
+    const content = lastAssistantContent(transcriptText) ?? [];
+    const text = typeof lastMessage === "string" ? lastMessage : lastTextOf(content);
+    return usedQuestionTool(content) || /[?？]\s*$/.test(text.trim()) ? "question" : "done";
+  }
 
-  const content = lastAssistantContent(transcriptText) ?? [];
-  const text = typeof lastMessage === "string" ? lastMessage : lastTextOf(content);
-
-  return usedQuestionTool(content) || /[?？]\s*$/.test(text.trim()) ? "question" : "done";
+  if (mode === "code-changes") return turnEditedFiles(transcriptText) ? "done" : null;
+  return "done";
 }
 
 /**
@@ -52,6 +58,23 @@ function lastAssistantContent(transcriptText) {
     if (entry?.type === "assistant") return entry.message?.content ?? [];
   }
   return null;
+}
+
+// Looks back from the end until the user's last prompt; tool results are not prompts.
+function turnEditedFiles(transcriptText) {
+  const lines = (transcriptText ?? "").split("\n");
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const entry = parseLine(lines[i]);
+    if (entry?.type === "user" && isPrompt(entry.message?.content)) return false;
+    const content = entry?.type === "assistant" ? entry.message?.content ?? [] : [];
+    if (content.some((block) => block.type === "tool_use" && EDIT_TOOLS.has(block.name))) return true;
+  }
+  return false;
+}
+
+function isPrompt(content) {
+  if (typeof content === "string") return true;
+  return Array.isArray(content) && content.some((block) => block.type === "text");
 }
 
 function usedQuestionTool(content) {

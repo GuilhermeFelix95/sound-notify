@@ -13,6 +13,7 @@ const deps = (overrides = {}) => {
       soundsDir,
       platform: "linux",
       readTail: async () => "",
+      readConfig: () => ({ mode: "always" }),
       play: async (file) => {
         played.push(file);
         return true;
@@ -62,4 +63,15 @@ test("reads the transcript path from the hook input", async () => {
 test("rejects input that is not valid JSON", async () => {
   const { options } = deps();
   await assert.rejects(handleStop("not json", options), SyntaxError);
+});
+
+test("plays nothing when the configured mode says this turn is silent", async () => {
+  const transcript = JSON.stringify({
+    type: "assistant",
+    message: { role: "assistant", content: [{ type: "text", text: "Explicação." }] },
+  });
+  const { played, options } = deps({ readTail: async () => transcript, readConfig: () => ({ mode: "code-changes" }) });
+  const sound = await handleStop(JSON.stringify({ permission_mode: "default", transcript_path: "/t" }), options);
+  assert.equal(sound, null);
+  assert.deepEqual(played, []);
 });

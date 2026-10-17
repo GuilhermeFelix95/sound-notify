@@ -5,7 +5,22 @@ Sound notifications for [Claude Code](https://claude.com/claude-code).
 - **Done:** a short rising chime when Claude finishes a turn.
 - **Question:** a different rising glide when Claude asks you a question in **plan mode**.
 
-Outside plan mode, every turn ends with the "done" sound, even if Claude ends with a question.
+Outside plan mode, every turn ends with the "done" sound, even if Claude ends with a question. Plan mode always plays a sound.
+
+## Configuration
+
+Create `~/.claude/sound-notify.json` (on Windows, in your user folder under `.claude`):
+
+```json
+{ "mode": "always" }
+```
+
+| mode | When the sound plays |
+| --- | --- |
+| `always` (default) | After every response. |
+| `code-changes` | Only after a turn that edited files. Plan mode still always plays. |
+
+A missing or invalid file uses `always`. Start a new session after changing the file.
 
 ## Requirements
 
